@@ -1,14 +1,29 @@
-import { Schema } from 'mongoose';
+import { EntitySchema } from 'typeorm';
 
-const ManholeCoverSchema = new Schema({
-  guid: {
-    type: String,
-    required: true,
+import { ManholeCoverEntity } from '../entity/manhole-cover.entity';
+
+const ManholeCoverSchema = new EntitySchema<ManholeCoverEntity>({
+  name: 'ManholeCoverEntity',
+  target: ManholeCoverEntity,
+  columns: {
+    guid: {
+      type: String,
+      primary: true,
+    },
+    material: {
+      type: String,
+    },
+    size: {
+      type: String,
+    },
+    radio: {
+      type: Number,
+    },
+    decoration: {
+      type: Boolean,
+      default: true,
+    },
   },
-  material: String,
-  size: String,
-  decoration: Boolean,
-  ratio: Number,
 });
 
 export default ManholeCoverSchema;

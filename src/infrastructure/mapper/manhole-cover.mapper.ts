@@ -1,11 +1,11 @@
 import { Optional } from 'typescript-optional';
 
 import ManHoleCover from '../../domain/manhole-cover';
-import { ManHoleCoverEntity } from '../adapters/repository/entity/manhole-cover.entity';
+import { ManholeCoverEntity } from '../adapters/repository/entity/manhole-cover.entity';
 
 export default class ManHoleCoverMapper {
   public static toDomain(
-    manholeCoverEntity: ManHoleCoverEntity,
+    manholeCoverEntity: ManholeCoverEntity,
   ): Optional<ManHoleCover> {
     if (!manholeCoverEntity) {
       return Optional.empty<ManHoleCover>();

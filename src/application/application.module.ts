@@ -1,28 +1,20 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ManholeCoverEntity } from 'src/infrastructure/adapters/repository/entity/manhole-cover.entity';
 
 import DomainModule from '../domain/domain.module';
-import ManholeCoverRepositoryMongo from '../infrastructure/adapters/repository/manhole-cover.repository.mongo';
-import ManholeCoverSchema from '../infrastructure/adapters/repository/schema/manhole-cover.schema';
+import ManholeCoverRepositoryMysql from '../infrastructure/adapters/repository/manhole-cover.repository.mysql';
 import CreateManholeCoverUseCase from './create-manhole-cover.usecase';
 import ManholeCoverFactory from './factory/manhole-cover.factory';
 
 @Module({
-  imports: [
-    DomainModule,
-    MongooseModule.forFeature([
-      {
-        name: 'ManholeCover',
-        schema: ManholeCoverSchema,
-      },
-    ]),
-  ],
+  imports: [DomainModule, TypeOrmModule.forFeature([ManholeCoverEntity])],
   providers: [
     ManholeCoverFactory,
     CreateManholeCoverUseCase,
     {
       provide: 'ManholeCoverRepository',
-      useClass: ManholeCoverRepositoryMongo,
+      useClass: ManholeCoverRepositoryMysql,
     },
   ],
   exports: [ManholeCoverFactory, CreateManholeCoverUseCase],

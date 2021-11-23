@@ -6,13 +6,13 @@ import InfrastructureModule from './infrastructure/infrastructure.module';
 
 @Module({})
 export default class AppModule {
-  static foorRoot(setting: any): DynamicModule {
+  static foorRoot(): DynamicModule {
     return {
       module: AppModule,
       imports: [
         DomainModule,
         ApplicationModule,
-        InfrastructureModule.foorRoot(setting),
+        InfrastructureModule.foorRoot(),
       ],
     };
   }

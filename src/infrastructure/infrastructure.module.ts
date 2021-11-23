@@ -1,35 +1,43 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import ApplicationModule from '../application/application.module';
-import ManholeCoverSchema from './adapters/repository/schema/manhole-cover.schema';
+import { ManholeCoverEntity } from './adapters/repository/entity/manhole-cover.entity';
+import ManholeCoverRepositoryMysql from './adapters/repository/manhole-cover.repository.mysql';
 import { ConfigModule } from './config.module';
 import { ConfigService } from './config.service';
 import ManholeCoverController from './controllers/manhole-cover.controller';
 
-const db_uri = 'MONGO_SERVER_URL';
-const db_port = 'MONGO_SERVER_PORT';
-const db_name = 'MONGO_SERVER_DBNAME';
+const db_port = 'MYSQL_SERVER_PORT';
+const db_name = 'MYSQL_SERVER_DBNAME';
+const db_host = 'MYSQL_SERVER_HOST';
+const db_username = 'MYSQL_SERVER_USERNAME';
+const db_password = 'MYSQL_SERVER_PASSWORD';
 
 @Module({})
 export default class InfrastructureModule {
-  static foorRoot(setting: any): DynamicModule {
+  static foorRoot(): DynamicModule {
     return {
       module: InfrastructureModule,
       imports: [
         ApplicationModule,
-        MongooseModule.forRootAsync({
+        TypeOrmModule.forRootAsync({
           imports: [ConfigModule],
-          useFactory: async (configService: ConfigService) => ({
-            uri: `mongodb://${configService.get(db_uri)}:${
-              setting.port || configService.get(db_port)
-            }/${configService.get(db_name)}`,
+          useFactory: (configService: ConfigService) => ({
+            type: 'mysql',
+            host: configService.get(db_host),
+            port: +configService.get(db_port),
+            username: configService.get(db_username),
+            password: configService.get(db_password),
+            database: configService.get(db_name),
+            entities: [ManholeCoverEntity],
+            synchronize: true,
           }),
           inject: [ConfigService],
         }),
-        MongooseModule.forFeature([
-          { name: 'ManholeCover', schema: ManholeCoverSchema },
-        ]),
+
+        // MongooseModule.forRootAsync({}),
+        TypeOrmModule.forFeature([ManholeCoverEntity]),
       ],
       controllers: [ManholeCoverController],
     };
