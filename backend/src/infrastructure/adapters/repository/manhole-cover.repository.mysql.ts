@@ -20,9 +20,7 @@ export default class ManholeCoverRepositoryMysql
   public async createManholeCover(
     manholeCover: ManholeCover,
   ): Promise<Optional<ManholeCover>> {
-    console.log('manholeCover BBBBB:>> ', manholeCover);
     const manholeCoverCreated = await this.manholeCoverModel.save(manholeCover);
-    console.log('manholeCoverCreated :>> ', manholeCoverCreated);
     return ManholeCoverMapper.toDomain(manholeCoverCreated);
   }
 }
