@@ -9,8 +9,6 @@ export default class ManholeCoverFactory {
     manholeCoverCreateCommand: ManholeCoverCreateCommand,
   ): MainholeCover {
     return new MainholeCover(
-      '',
-      manholeCoverCreateCommand.size,
       manholeCoverCreateCommand.material,
       manholeCoverCreateCommand.decoration,
       manholeCoverCreateCommand.radio,

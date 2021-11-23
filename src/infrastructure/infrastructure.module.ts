@@ -2,10 +2,10 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import ApplicationModule from '../application/application.module';
-import ProductSchema from './adapters/repository/schema/product.schema';
+import ManholeCoverSchema from './adapters/repository/schema/manhole-cover.schema';
 import { ConfigModule } from './config.module';
 import { ConfigService } from './config.service';
-import ProductController from './controllers/product.controller';
+import ManholeCoverController from './controllers/manhole-cover.controller';
 
 const db_uri = 'MONGO_SERVER_URL';
 const db_port = 'MONGO_SERVER_PORT';
@@ -27,9 +27,11 @@ export default class InfrastructureModule {
           }),
           inject: [ConfigService],
         }),
-        MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
+        MongooseModule.forFeature([
+          { name: 'ManholeCover', schema: ManholeCoverSchema },
+        ]),
       ],
-      controllers: [ProductController],
+      controllers: [ManholeCoverController],
     };
   }
 }

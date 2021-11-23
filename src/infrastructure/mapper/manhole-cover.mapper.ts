@@ -12,25 +12,11 @@ export default class ManHoleCoverMapper {
     }
 
     const manholeCover = new ManHoleCover(
-      manholeCoverEntity.guid,
-      manholeCoverEntity.size,
       manholeCoverEntity.material,
       manholeCoverEntity.decoration,
       manholeCoverEntity.radio,
     );
 
-    // manholeCover.setCreateAt(new Date(manholeCoverEntity.createAt)); TODO.: guid
     return Optional.of(manholeCover);
-  }
-
-  public static toDomains(
-    manholeCoverEntity: ManHoleCoverEntity[],
-  ): ManHoleCover[] {
-    const manholeCovers = new Array<ManHoleCover>();
-    manholeCoverEntity.forEach((manholeCoverEntity) => {
-      const manholeCover = this.toDomain(manholeCoverEntity);
-      manholeCovers.push(manholeCover.get());
-    });
-    return manholeCovers;
   }
 }

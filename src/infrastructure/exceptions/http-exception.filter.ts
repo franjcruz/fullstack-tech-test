@@ -1,8 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
-import PriceProductLessZeroException from 'src/domain/exceptions/price-product-less-zero.exception';
-
-// TODO: añadir mi exception.
+import BadMaterialManholeCoverGivenException from 'src/domain/exceptions/bad-material-manhole-cover-given.exception';
+import RadioManholeCoverLessTenException from 'src/domain/exceptions/radio-manhole-cover-less-ten.exception';
 
 @Catch()
 export default class HttpExceptionFilter implements ExceptionFilter<Error> {
@@ -22,7 +21,10 @@ export default class HttpExceptionFilter implements ExceptionFilter<Error> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public isBusinessException(exception: Error): any {
-    if (exception instanceof PriceProductLessZeroException) {
+    if (
+      exception instanceof RadioManholeCoverLessTenException ||
+      exception instanceof BadMaterialManholeCoverGivenException
+    ) {
       return {
         message: exception.message,
         status: 400,

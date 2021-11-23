@@ -1,15 +1,9 @@
-import { IsBoolean, IsInt, IsString } from 'class-validator';
-
 export class ManholeCoverCreateCommand {
-  @IsInt()
-  readonly radio: number;
+  size: string;
 
-  @IsString()
-  readonly size: string;
+  material: string;
 
-  @IsString()
-  readonly material: string;
+  decoration: boolean;
 
-  @IsBoolean()
-  readonly decoration: boolean;
+  radio: number;
 }

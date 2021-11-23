@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import DomainModule from '../domain/domain.module';
-import ProductRepositoryMongo from '../infrastructure/adapters/repository/product.repository.mongo';
-import ProductSchema from '../infrastructure/adapters/repository/schema/product.schema';
+import ManholeCoverRepositoryMongo from '../infrastructure/adapters/repository/manhole-cover.repository.mongo';
+import ManholeCoverSchema from '../infrastructure/adapters/repository/schema/manhole-cover.schema';
 import CreateManholeCoverUseCase from './create-manhole-cover.usecase';
 import ManholeCoverFactory from './factory/manhole-cover.factory';
 
@@ -12,8 +12,8 @@ import ManholeCoverFactory from './factory/manhole-cover.factory';
     DomainModule,
     MongooseModule.forFeature([
       {
-        name: 'Product',
-        schema: ProductSchema,
+        name: 'ManholeCover',
+        schema: ManholeCoverSchema,
       },
     ]),
   ],
@@ -21,8 +21,8 @@ import ManholeCoverFactory from './factory/manhole-cover.factory';
     ManholeCoverFactory,
     CreateManholeCoverUseCase,
     {
-      provide: 'ProductRepository',
-      useClass: ProductRepositoryMongo,
+      provide: 'ManholeCoverRepository',
+      useClass: ManholeCoverRepositoryMongo,
     },
   ],
   exports: [ManholeCoverFactory, CreateManholeCoverUseCase],

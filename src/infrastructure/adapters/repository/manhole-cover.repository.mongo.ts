@@ -20,7 +20,9 @@ export default class ManholeCoverRepositoryMongo
   public async createManholeCover(
     manholeCover: ManholeCover,
   ): Promise<Optional<ManholeCover>> {
+    console.log('manholeCover BBBBB:>> ', manholeCover);
     let manholeCoverCreated = new this.manholeCoverModel(manholeCover);
+    console.log('manholeCoverCreated :>> ', manholeCoverCreated);
     manholeCoverCreated = await manholeCoverCreated.save();
     return ManholeCoverMapper.toDomain(manholeCoverCreated);
   }

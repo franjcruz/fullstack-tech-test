@@ -1,44 +1,54 @@
-import PriceProductLessZeroException from './exceptions/price-product-less-zero.exception';
+import { v4 as uuidv4 } from 'uuid';
+
+import BadMaterialManholeCoverGivenException from './exceptions/bad-material-manhole-cover-given.exception';
+import RadioManholeCoverLessTenException from './exceptions/radio-manhole-cover-less-ten.exception';
 
 export default class MainholeCover {
-  private guid: string;
+  guid: string;
+  size: string;
+  material: string;
+  decoration: boolean;
+  radio: number;
 
-  private readonly size: string;
-
-  private readonly material: string;
-
-  private readonly decoration: boolean;
-
-  private readonly radio: number;
-
-  constructor(
-    guid: string,
-    size: string,
-    material: string,
-    decoration: boolean,
-    radio: number,
-  ) {
-    this.guid = guid;
-    this.size = size;
+  constructor(material: string, decoration: boolean, radio: number) {
+    this.guid = uuidv4();
     this.material = material;
     this.decoration = decoration;
-    this.radio = radio || 0;
-    this.validatePrice();
+    this.radio = radio;
+
+    this.validateRadio();
+    this.validateMaterial();
+    this.calculateSize();
   }
 
-  public validatePrice(): void {
-    if (this.radio <= 0) {
-      throw new PriceProductLessZeroException(
-        'The price product should be greater than zero',
+  public validateRadio(): void {
+    if (this.radio < 10) {
+      throw new RadioManholeCoverLessTenException(
+        'The radio should be at least ten',
       );
     }
   }
 
-  public getSize(): string {
-    return this.size;
+  public validateMaterial(): void {
+    if (
+      this.material !== 'iron' &&
+      this.material !== 'steel' &&
+      this.material !== 'stone'
+    ) {
+      throw new BadMaterialManholeCoverGivenException(
+        'The material used must be iron, steel or stone',
+      );
+    }
   }
-
-  public getId(): string {
-    return this.guid;
+  public calculateSize(): void {
+    if (this.radio < 15) {
+      this.size = 'S';
+    } else if (this.radio < 20) {
+      this.size = 'M';
+    } else if (this.radio < 25) {
+      this.size = 'L';
+    } else {
+      this.size = 'XL';
+    }
   }
 }
