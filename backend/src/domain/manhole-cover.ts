@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import BadMaterialManholeCoverGivenException from './exceptions/bad-material-manhole-cover-given.exception';
 import RadioManholeCoverLessTenException from './exceptions/radio-manhole-cover-less-ten.exception';
 
-export default class MainholeCover {
+export default class ManholeCover {
   guid: string;
   size: string;
   material: string;

@@ -15,7 +15,6 @@ export default class ManholeCoverController {
     @Res() request,
     @Body() manholeCover: ManholeCoverCreateCommand,
   ): Promise<ManholeCover> {
-    // añadido mio, eso era any
     const manholeCoverCreated = await this.createManholeCoverUseCase.handler(
       manholeCover,
     );
