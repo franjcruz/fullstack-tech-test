@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Submit = styled.button`
-  width: 85%;
-  margin: 1.5rem 1.5rem;
+  width: 94%;
+  margin: 15px auto;
   background-color: #9e50ff;
   display: block;
   text-align: center;

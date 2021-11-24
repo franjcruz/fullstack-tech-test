@@ -1,6 +1,10 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Form, Formik, FormikProps } from 'formik';
+import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 
+import { createManholeCover } from '../../api/manholeCover';
 import InputField from '../InputField';
 import SelectField from '../SelectorField';
 import SubmitButton from '../SubmitButton';
@@ -12,7 +16,7 @@ interface ICreateForm {
 }
 
 const initialValues: ICreateForm = {
-  material: "",
+  material: "iron",
   radio: 10,
   decoration: false,
 }
@@ -27,12 +31,24 @@ const validationSchema = Yup.object().shape({
     .required('Enter a valid option'),
 })
 
-const onSubmit = (values: ICreateForm) => {
-  console.log('values :>> ', values)
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2))
+const onSubmit = async (values: ICreateForm) => {
+  const notifyError = (m: string) => toast.error(`Error: ${m}`)
+  const notify = (guid: string) => toast.success("Created! GUID: " + guid)
+  try {
+    const res = await createManholeCover(values)
 
-  }, 500)
+    if (res) {
+      notify(res.guid)
+    }
+  } catch (e: any) {
+    if (e?.response?.data?.message) {
+      notifyError(e.response.data.message)
+    } else {
+      notifyError(e.message)
+
+    }
+
+  }
 }
 
 const CreateForm: React.FC = () => (
@@ -43,6 +59,7 @@ const CreateForm: React.FC = () => (
       const {
         touched,
         errors,
+        isSubmitting
       } = props
 
       return (
@@ -72,16 +89,18 @@ const CreateForm: React.FC = () => (
           </SelectField>
           <SubmitButton text="Submit"
             disabled={
-              // isSubmitting ||
+              isSubmitting ||
               !!(errors.radio && touched.radio) ||
               !!(errors.material && touched.material) ||
               !!(errors.decoration && touched.decoration)
             }
           ></SubmitButton>
+          <ToastContainer />
         </Form>
       )
     }}>
   </Formik>
+
 )
 
 export default CreateForm

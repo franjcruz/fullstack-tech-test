@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import ApplicationModule from '../application/application.module';
 import { ManholeCoverEntity } from './adapters/repository/entity/manhole-cover.entity';
-import ManholeCoverRepositoryMysql from './adapters/repository/manhole-cover.repository.mysql';
 import { ConfigModule } from './config.module';
 import { ConfigService } from './config.service';
 import ManholeCoverController from './controllers/manhole-cover.controller';
