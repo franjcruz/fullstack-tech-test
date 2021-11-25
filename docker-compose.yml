@@ -1,8 +1,6 @@
 version: '3.3'
 services:
   backend:
-    container_name: nestjs_api_dev
-    image: nestjs-api-dev:1.0.0
     build:
         context: ./backend
         dockerfile: ./Dockerfile
@@ -14,6 +12,17 @@ services:
         - .:/usr/src/app
         - /usr/src/app/node_modules
     restart: unless-stopped
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
   db:
     image: mysql:5.7
     restart: always
@@ -21,9 +30,9 @@ services:
       MYSQL_DATABASE: 'kronte-test'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - '3306:3306'
+      - '6603:3306'
     expose:
-      - '3306'
+      - '6603'
     volumes:
       - my-db:/var/lib/mysql
 volumes:
