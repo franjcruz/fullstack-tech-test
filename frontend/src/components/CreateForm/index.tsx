@@ -12,13 +12,13 @@ import SubmitButton from '../SubmitButton';
 interface ICreateForm {
   material: string,
   radio: number,
-  decoration: boolean,
+  decoration: string,
 }
 
 const initialValues: ICreateForm = {
   material: "iron",
   radio: 10,
-  decoration: false,
+  decoration: 'false',
 }
 
 const validationSchema = Yup.object().shape({
@@ -45,9 +45,7 @@ const onSubmit = async (values: ICreateForm) => {
       notifyError(e.response.data.message)
     } else {
       notifyError(e.message)
-
     }
-
   }
 }
 

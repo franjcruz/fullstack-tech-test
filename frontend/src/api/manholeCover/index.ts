@@ -4,4 +4,8 @@ import { CreateManholeCoverData } from './types';
 
 export const createManholeCover = (
   data: CreateManholeCoverData
-): Promise<ManholeCover> => http.post('/manhole_cover/build', data)
+): Promise<ManholeCover> =>
+  http.post('/manhole_cover/build', {
+    ...data,
+    decoration: data.decoration === 'true' ? true : false,
+  })

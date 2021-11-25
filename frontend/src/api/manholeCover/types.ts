@@ -1,5 +1,5 @@
 export type CreateManholeCoverData = {
   radio: number
   material: string
-  decoration: boolean
+  decoration: string
 }
